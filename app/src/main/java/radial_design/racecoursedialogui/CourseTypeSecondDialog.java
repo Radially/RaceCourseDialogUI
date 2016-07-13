@@ -42,7 +42,7 @@ public class CourseTypeSecondDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setTitle("Choose Race Course Options");
+        super.setTitle("Choose Course Options");
         super.setContentView(R.layout.course_type_second_dialog);
         ownLayout = (LinearLayout) findViewById(R.id.course_type_second_dialog);
         if (options != null) {

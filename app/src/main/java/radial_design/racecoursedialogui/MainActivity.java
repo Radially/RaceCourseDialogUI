@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
         coursesInfo.add(new CourseTypeOptions("Trapezoid 60,120", options));
         coursesInfo.add(new CourseTypeOptions("Trapezoid 70,110", options));
         String[] laser = {"Course Option","spinner","A-Medium","B-Big","C-Small","D-Narrow"};
-        coursesInfo.add(new CourseTypeOptions("Laser", options));
+        coursesInfo.add(new CourseTypeOptions("Laser", laser));
         String[] windLee = {"Finish line location","spinner","W-Windward","L-Leeward","WR-Windward Right","WG-Windward Left","LR-Leeward Right","LG-Windward Left"};
-        coursesInfo.add(new CourseTypeOptions("Windward-Leeward",options));
+        coursesInfo.add(new CourseTypeOptions("Windward-Leeward",windLee));
         coursesInfo.add(new CourseTypeOptions("Optimist"));
-
+        //------------------until here -information sent by the server------
 
         dialogOpenner =(Button)findViewById(R.id.open_dialog_button);
         dialogOpenner.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 package radial_design.racecoursedialogui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,19 +13,28 @@ public class CourseTypeOptions {
     private List<String[]> options; //{name, view to contain options}, {option1, option2, ...}
 
 
-    public CourseTypeOptions(String name, List<String[]> options){
-        this.name=name;
-        this.options=options;
+    public CourseTypeOptions(String name, List<String[]> options) {
+        this.name = name;
+        this.options = options;
     }
-    public CourseTypeOptions(String name){
-        this.name=name;
-        this.options=null;
+
+    public CourseTypeOptions(String name, String[] optionsArray) {
+        List<String[]> options = new ArrayList<>();
+        options.add(optionsArray);
+        this.name = name;
+        this.options = options;
+    }
+
+    public CourseTypeOptions(String name) {
+        this.name = name;
+        this.options = null;
     }
 
 
     public void setName(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }
@@ -32,6 +42,7 @@ public class CourseTypeOptions {
     public void setImageID(int imageID) {
         this.imageID = imageID;
     }
+
     public int getImageID() {
         return imageID;
     }

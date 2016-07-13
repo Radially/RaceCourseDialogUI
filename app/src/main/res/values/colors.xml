@@ -6,4 +6,10 @@
 
     <color name="nonscense_done">#cd2e83eb</color>
     <color name="nonscense_done_text">#cdffad6e</color>
+
+    <color name="cmark_orange">#f36523</color>
+    <color name="cmark_orange_darker">#f34d00</color>
+
+    <color name="cmark_blue">#0f75bd</color>
+    <color name="cmark_blue_darker">#005d9f</color>
 </resources>

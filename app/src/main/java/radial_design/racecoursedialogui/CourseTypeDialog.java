@@ -37,6 +37,7 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
         super.onCreate(savedInstanceState);
         super.setTitle("Choose Race Course");
         super.setCancelable(true);
+
         super.setContentView(R.layout.course_type_dialog);
 
         recyclerView=(RecyclerView)findViewById(R.id.course_type_rv);
