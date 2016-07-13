@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -42,7 +43,8 @@ public class CourseTypeSecondDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setTitle("Choose Course Options");
+        super.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //super.setTitle("Choose Course Options");
         super.setContentView(R.layout.course_type_second_dialog);
         ownLayout = (LinearLayout) findViewById(R.id.course_type_second_dialog);
         if (options != null) {
@@ -72,8 +74,8 @@ public class CourseTypeSecondDialog extends Dialog {
         Button finishB = new Button(context);
         finishB.setText("Done");
         finishB.setTextSize(25);
-        finishB.setTextColor(context.getResources().getColor(R.color.nonscense_done_text));
-        finishB.setBackgroundResource(R.color.nonscense_done);
+        finishB.setTextColor(context.getResources().getColor(R.color.cmark_orange_lighter));
+        finishB.setBackgroundResource(R.color.cmark_blue_light);
         finishB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
