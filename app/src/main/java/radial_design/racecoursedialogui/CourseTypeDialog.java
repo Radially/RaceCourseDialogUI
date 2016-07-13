@@ -36,8 +36,7 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
         super.onCreate(savedInstanceState);
         super.setTitle("Choose Race Course");
         super.setCancelable(true);
-        super.
-        setContentView(R.layout.course_type_dialog);
+        super.setContentView(R.layout.course_type_dialog);
 
         recyclerView=(RecyclerView)findViewById(R.id.course_type_rv);
         recyclerView.setHasFixedSize(true);
@@ -49,6 +48,9 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
 
     @Override
     public void onRecyclerItemClick(CourseTypeOptions courseTypeOptions){
+        CourseTypeSecondDialog dialog = new CourseTypeSecondDialog(context, courseTypeOptions.getOptions());
+        dialog.show();
+        mDialogResult.finish("Falafel");
         dismiss();
     }
 
@@ -59,4 +61,5 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
     public interface OnMyDialogResult{
         void finish(String result);
     }
+
 }
