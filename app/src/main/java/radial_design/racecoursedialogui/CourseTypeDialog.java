@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Jonathan on 13/07/2016.
  */
-public class CourseTypeDialog extends Dialog implements View.OnClickListener{
+public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerItemClickListener{
 
 
     private RecyclerView recyclerView;
@@ -34,20 +34,22 @@ public class CourseTypeDialog extends Dialog implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.setTitle("Choose Race Course");
+        super.setCancelable(true);
+        super.
         setContentView(R.layout.course_type_dialog);
 
         recyclerView=(RecyclerView)findViewById(R.id.course_type_rv);
         recyclerView.setHasFixedSize(true);
         layoutManager= new GridLayoutManager(context,2, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter= new CourseTypeRV(coursesList);
+        adapter= new CourseTypeRV(coursesList, this);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void onClick(View v){
-
+    public void onRecyclerItemClick(CourseTypeOptions courseTypeOptions){
+        dismiss();
     }
 
     public void setDialogResult(OnMyDialogResult dialogResult){
