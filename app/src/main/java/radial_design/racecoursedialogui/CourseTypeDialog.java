@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jonathan on 13/07/2016.
@@ -50,7 +51,11 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
     public void onRecyclerItemClick(CourseTypeOptions courseTypeOptions){
         CourseTypeSecondDialog dialog = new CourseTypeSecondDialog(context, courseTypeOptions.getOptions());
         dialog.show();
-        mDialogResult.finish("Falafel");
+        dialog.setDialogResult(new CourseTypeSecondDialog.OnMyDialogResult() {
+            public void finish(Map<String, String> result) {
+                mDialogResult.finish(result);
+            }
+        });
         dismiss();
     }
 
@@ -59,7 +64,7 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
     }
 
     public interface OnMyDialogResult{
-        void finish(String result);
+        void finish(Map<String, String> result);
     }
 
 }

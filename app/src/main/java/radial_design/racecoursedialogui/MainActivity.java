@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 CourseTypeDialog dialog = new CourseTypeDialog(context, coursesInfo);
                 dialog.show();
                 dialog.setDialogResult(new CourseTypeDialog.OnMyDialogResult() {
-                    public void finish(String result) {
+                    public void finish(Map<String, String> result) {
                         //something to do
+                        //use the map of the selected race curse options
                     }
                 });
             }

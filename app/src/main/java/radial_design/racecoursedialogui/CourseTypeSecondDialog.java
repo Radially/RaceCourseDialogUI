@@ -6,15 +6,18 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +28,8 @@ public class CourseTypeSecondDialog extends Dialog {
     private Context context;
     private LinearLayout ownLayout;
     private List<String[]> options; //{name, view to contain options}, {option1, option2, ...}
+    private OnMyDialogResult mDialogResult;
+
 
     public CourseTypeSecondDialog(Context context, List<String[]> options) {
         super(context);
@@ -70,12 +75,36 @@ public class CourseTypeSecondDialog extends Dialog {
         finishB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Map<String, String> selectedOptions = new HashMap<String, String>();  //map of the selected settings
+                for (int i = 0; i < ownLayout.getChildCount()-1; i=i+2) {
+                    TextView tv=(TextView)ownLayout.getChildAt(i);
+                    switch (ownLayout.getChildAt(i+1).getClass().toString()) {
+                        case "class android.widget.Spinner":
+                            Toast.makeText(context, "we can work from home! oooh o-oh", Toast.LENGTH_LONG).show();
+                            Spinner spinner=(Spinner)ownLayout.getChildAt(i+1);
+                            selectedOptions.put(tv.getText().toString(),spinner.getSelectedItem().toString());
+                            break;
+                        case "class android.widget.ToggleButton":
+                            ToggleButton toggleButton=(ToggleButton)ownLayout.getChildAt(i+1);
+                            if(toggleButton.isChecked())selectedOptions.put(tv.getText().toString(), "true");
+                            else selectedOptions.put(tv.getText().toString(), "false");
+                            break;
+                    }
+                }
+                Log.w("check", selectedOptions.values().toString());
+                mDialogResult.finish(selectedOptions);
                 dismiss();
             }
         });
         ownLayout.addView(finishB);
+    }
 
+    public void setDialogResult(OnMyDialogResult dialogResult){
+        mDialogResult = dialogResult;
+    }
+
+    public interface OnMyDialogResult{
+        void finish(Map<String, String> result);
     }
 
 }
