@@ -24,15 +24,21 @@ public class MainActivity extends AppCompatActivity {
 
         context=this;
         coursesInfo = new ArrayList<CourseTypeOptions>();
+        //since coursesInfo is sent from the server, but we still don't have this system:
+        //------------------from here -information sent by the server------
         List<String[]> options = new ArrayList<>();
-        String[] a = {"Legs","spinner", "Shorted Outer", "reach is 1/2 beat", "reach is 2/3 beat" };
-        options.add(a);
-        String[] b = {"4 Gate","toggle"};
-        options.add(b);
-        coursesInfo.add(new CourseTypeOptions("Trapezoid 60,120",options));
-        coursesInfo.add(new CourseTypeOptions("Trapezoid 70,110"));
-        coursesInfo.add(new CourseTypeOptions("Laser"));
-        coursesInfo.add(new CourseTypeOptions("Windward-Leeward"));
+        String[] legs = {"Legs","spinner", "Shorted Outer", "reach is 1/2 beat", "reach is 2/3 beat" };
+        options.add(legs);
+        String[] gate3 = {"3 Gate","toggle"};
+        options.add(gate3);
+        String[] gate4 = {"4 Gate","toggle"};
+        options.add(gate4);
+        coursesInfo.add(new CourseTypeOptions("Trapezoid 60,120", options));
+        coursesInfo.add(new CourseTypeOptions("Trapezoid 70,110", options));
+        String[] laser = {"Course Option","spinner","A-Medium","B-Big","C-Small","D-Narrow"};
+        coursesInfo.add(new CourseTypeOptions("Laser", options));
+        String[] windLee = {"Finish line location","spinner","W-Windward","L-Leeward","WR-Windward Right","WG-Windward Left","LR-Leeward Right","LG-Windward Left"};
+        coursesInfo.add(new CourseTypeOptions("Windward-Leeward",options));
         coursesInfo.add(new CourseTypeOptions("Optimist"));
 
 

@@ -29,12 +29,14 @@ public class CourseTypeSecondDialog extends Dialog {
     private LinearLayout ownLayout;
     private List<String[]> options; //{name, view to contain options}, {option1, option2, ...}
     private OnMyDialogResult mDialogResult;
+    private String courseName;
 
 
-    public CourseTypeSecondDialog(Context context, List<String[]> options) {
+    public CourseTypeSecondDialog(Context context, String courseName ,List<String[]> options) {
         super(context);
         this.context = context;
         this.options = options;
+        this.courseName=courseName;
     }
 
     @Override
@@ -76,6 +78,7 @@ public class CourseTypeSecondDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 Map<String, String> selectedOptions = new HashMap<String, String>();  //map of the selected settings
+                selectedOptions.put("type",courseName);
                 for (int i = 0; i < ownLayout.getChildCount()-1; i=i+2) {
                     TextView tv=(TextView)ownLayout.getChildAt(i);
                     switch (ownLayout.getChildAt(i+1).getClass().toString()) {
