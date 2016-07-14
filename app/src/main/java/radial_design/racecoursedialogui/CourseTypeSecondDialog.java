@@ -46,7 +46,7 @@ public class CourseTypeSecondDialog extends Dialog {
         super.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.setContentView(R.layout.course_type_second_dialog);
 
-        TextView titleV=(TextView) findViewById(R.id.secound_dialog_title);   //set dialog title
+        TextView titleV=(TextView) findViewById(R.id.second_dialog_title);   //set dialog title
         titleV.setText(courseName + " Course Options");
         titleV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 

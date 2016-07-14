@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     public Context context;
     public Button dialogOpenner;
+    public Button distanceDialogB;
     private List<CourseTypeOptions> coursesInfo;
 
     @Override
@@ -54,6 +55,21 @@ public class MainActivity extends AppCompatActivity {
                         //use the map of the selected race curse options
                     }
                 });
+            }
+        });
+
+        distanceDialogB =(Button)findViewById(R.id.distance_dialog_b);
+        distanceDialogB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DistanceDialog dialog = new DistanceDialog(context);
+                dialog.show();
+                /*dialog.setDialogResult(new CourseTypeDialog.OnMyDialogResult() {
+                    public void finish(Map<String, String> result) {
+                        //something to do
+                        //use the map of the selected race curse options
+                    }
+                });*/
             }
         });
     }
