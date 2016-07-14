@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:windowSoftInputMode="adjustPan|adjustResize"
     >
     <TextView
         android:id="@+id/secound_dialog_title"
@@ -17,11 +18,15 @@
         android:layout_width="fill_parent"
         android:layout_height="5dp"
         android:background="@color/cmark_blue_light"/>
-    <LinearLayout
-        android:id="@+id/course_type_second_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
-
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:id="@+id/course_type_second_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

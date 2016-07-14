@@ -44,18 +44,22 @@ public class CourseTypeSecondDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //super.setTitle("Choose Course Options");
         super.setContentView(R.layout.course_type_second_dialog);
-        ownLayout = (LinearLayout) findViewById(R.id.course_type_second_dialog);
+
+        TextView titleV=(TextView) findViewById(R.id.secound_dialog_title);   //set dialog title
+        titleV.setText(courseName + " Course Options");
+        titleV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        ownLayout = (LinearLayout) findViewById(R.id.course_type_second_dialog);    //choose the layout to add the views
         if (options != null) {
-            for (int c = 0; c < options.size(); c++) {
-                TextView textView = new TextView(context);
+            for (int c = 0; c < options.size(); c++) {  //add all the race course options views. textView for the name and Spinner/Toggle/... for value
+                TextView textView = new TextView(context);  //set value name on a TextView
                 textView.setText(options.get(c)[0]);
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 textView.setTextSize(25);
                 ownLayout.addView(textView);
                 View setterBox = null;
-                switch (options.get(c)[1]) {
+                switch (options.get(c)[1]) {   //set an input view to get the value from the user
                     case "spinner":
                         Spinner dropdown = new Spinner(context);
                         String[] items = Arrays.copyOfRange(options.get(c), 2, options.get(c).length);
@@ -65,11 +69,23 @@ public class CourseTypeSecondDialog extends Dialog {
                         setterBox=dropdown;
                         break;
                     case "toggle":
-                        setterBox = new ToggleButton(context);
+                        ToggleButton toggleB = new ToggleButton(context);
+                        toggleB.setTextSize(25);
+                        toggleB.setText("NO");
+                        toggleB.setTextOff("NO");
+                        toggleB.setTextOn("YES");
+                        setterBox=toggleB;
                         break;
                 }
                 if (setterBox != null) ownLayout.addView(setterBox);
             }
+        }
+        else{
+            TextView textView = new TextView(context);  //set value name on a TextView
+            textView.setText("No Special Options");
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textView.setTextSize(25);
+            ownLayout.addView(textView);
         }
         Button finishB = new Button(context);
         finishB.setText("Done");

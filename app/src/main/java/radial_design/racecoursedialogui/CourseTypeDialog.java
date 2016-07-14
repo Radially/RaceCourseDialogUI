@@ -35,7 +35,7 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setTitle("Choose Race Course");
+        super.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.setCancelable(true);
 
         super.setContentView(R.layout.course_type_dialog);
