@@ -31,7 +31,6 @@ public class DistanceDialog extends Dialog {
         super.setContentView(R.layout.distance_dialog);
         ownLayout = (LinearLayout) findViewById(R.id.distance_dialog);
 
-
         TextView titleV=(TextView) findViewById(R.id.distance_dialog_title);   //set dialog title
         titleV.setText("Choose Distance to Mark 1");
         titleV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -48,6 +47,14 @@ public class DistanceDialog extends Dialog {
         spec.setContent(R.id.tab2);
         spec.setIndicator("Class & Wind");
         tabHost.addTab(spec);
+
+        finishB = (Button)findViewById(R.id.distance_finish_b);
+        finishB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
     }
 }

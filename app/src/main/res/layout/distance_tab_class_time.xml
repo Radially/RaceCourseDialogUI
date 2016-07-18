@@ -28,13 +28,11 @@
         android:textAlignment="center"
         android:textSize="25sp" />
 
-    <include layout="@layout/horizontal_number_picker"
-        android:layout_height="wrap_content"
+    <radial_design.racecoursedialogui.HorizontalNumberPicker
+        android:id="@+id/wind_picker"
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-         />
-
-
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/distance_time_tv"
@@ -44,17 +42,10 @@
         android:textAlignment="center"
         android:textSize="25sp" />
 
-    <include
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        layout="@layout/horizontal_number_picker"
-        android:layout_margin="10dp"
-        />
-
     <radial_design.racecoursedialogui.HorizontalNumberPicker
+        android:id="@+id/target_time_picker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/view"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

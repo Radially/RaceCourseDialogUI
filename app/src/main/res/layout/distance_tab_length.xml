@@ -14,12 +14,11 @@
         android:textAlignment="center"
         android:textSize="25sp" />
 
-    <NumberPicker
+    <radial_design.racecoursedialogui.HorizontalNumberPicker
         android:id="@+id/distance_length_picker"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:textAlignment="center" />
+        android:layout_gravity="center_horizontal" />
+
 
 </LinearLayout>
