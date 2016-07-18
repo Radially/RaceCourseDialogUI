@@ -116,5 +116,6 @@ public class HorizontalNumberPicker extends RelativeLayout {
         this.initialN=initialNum;
         this.number=initialNum;
         this.steps=steps;
+        setNumber(number);
     }
 }

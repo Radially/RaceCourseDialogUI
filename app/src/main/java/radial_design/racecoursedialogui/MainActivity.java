@@ -1,10 +1,11 @@
 package radial_design.racecoursedialogui;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,12 @@ public class MainActivity extends AppCompatActivity {
     public Button dialogOpenner;
     public Button distanceDialogB;
     private List<CourseTypeOptions> coursesInfo;
+    public enum BoatType{ //TODO move to online database
+        C470, C420, RADIAL, LASER, LASER47, OPTIMIST, OPTIMISTLOCAL, RSX, BIC78, BIC68, BIC5, KITE, CATAMARAN17, CATAMARAN21, YACHT
+    }
+    private BoatType[] boats;
+
+    private double raceCourseDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         String[] windLee = {"Finish line location","spinner","W-Windward","L-Leeward","WR-Windward Right","WG-Windward Left","LR-Leeward Right","LG-Windward Left"};
         coursesInfo.add(new CourseTypeOptions("Windward-Leeward",windLee));
         coursesInfo.add(new CourseTypeOptions("Optimist"));
+
+        boats = BoatType.values();
         //------------------until here -information sent by the server------
 
         dialogOpenner =(Button)findViewById(R.id.open_dialog_button);
@@ -62,14 +71,22 @@ public class MainActivity extends AppCompatActivity {
         distanceDialogB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DistanceDialog dialog = new DistanceDialog(context);
+                DistanceDialog dialog = new DistanceDialog(context, boats);
                 dialog.show();
-                /*dialog.setDialogResult(new CourseTypeDialog.OnMyDialogResult() {
-                    public void finish(Map<String, String> result) {
+                dialog.setDialogResult(new DistanceDialog.OnMyDialogResult() {
+                    public void finish(Object result) {
                         //something to do
-                        //use the map of the selected race curse options
+                        Toast.makeText(context, result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                        switch (result.getClass().toString()){
+                            case "class java.lang.Double":
+                                raceCourseDistance = (double)result;
+                                Toast.makeText(context, raceCourseDistance+", Straightforward ha?", Toast.LENGTH_SHORT).show();
+                                break;
+                            case "class [Ljava.lang.Object;":
+                                break;
+                        }
                     }
-                });*/
+                });
             }
         });
     }
