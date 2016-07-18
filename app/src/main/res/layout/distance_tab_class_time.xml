@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/distance_class_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Class"
+        android:textAlignment="center"
+        android:textSize="25sp" />
+
+    <Spinner
+        android:id="@+id/distance_class_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center" />
+
+
+    <TextView
+        android:id="@+id/distance_wind_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wind Strength"
+        android:textAlignment="center"
+        android:textSize="25sp" />
+
+    <include layout="@layout/horizontal_number_picker"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+         />
+
+
+
+    <TextView
+        android:id="@+id/distance_time_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Target Time"
+        android:textAlignment="center"
+        android:textSize="25sp" />
+
+    <include
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/horizontal_number_picker"
+        android:layout_margin="10dp"
+        />
+
+    <radial_design.racecoursedialogui.HorizontalNumberPicker
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/view"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
+
+<!--
+    <NumberPicker
+        android:id="@+id/distance_wind_np"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center" />
+
+
+    <NumberPicker
+        android:id="@+id/distance_time_np"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+-->

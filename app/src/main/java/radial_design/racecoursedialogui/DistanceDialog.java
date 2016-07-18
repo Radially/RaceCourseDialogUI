@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 /**
@@ -12,8 +15,13 @@ import android.widget.TextView;
  */
 public class DistanceDialog extends Dialog {
 
+    public Button finishB;
+    private Context context;
+    private LinearLayout ownLayout;
+
     public DistanceDialog(Context context) {
         super(context);
+        this.context=context;
     }
 
     @Override
@@ -21,9 +29,25 @@ public class DistanceDialog extends Dialog {
         super.onCreate(savedInstanceState);
         super.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.setContentView(R.layout.distance_dialog);
+        ownLayout = (LinearLayout) findViewById(R.id.distance_dialog);
+
 
         TextView titleV=(TextView) findViewById(R.id.distance_dialog_title);   //set dialog title
         titleV.setText("Choose Distance to Mark 1");
         titleV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        TabHost tabHost=(TabHost)findViewById(R.id.tabhost);
+        tabHost.setup();
+
+        TabHost.TabSpec spec=tabHost.newTabSpec("Distance");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("Distance");
+        tabHost.addTab(spec);
+
+        spec=tabHost.newTabSpec("Class & Wind");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("Class & Wind");
+        tabHost.addTab(spec);
+
     }
 }
