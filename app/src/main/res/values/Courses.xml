@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <Course name="Trapezoid 70,110">
+        <Legs name="Shorted Outer">
+            <Mark name="1">
+                <Direction>0</Direction>
+                <DistanceFactor>1</DistanceFactor>
+                <Gatable>
+                    <isGatable>true</isGatable>
+                    <GateType>"Satellite"</GateType>
+                    <Direction>70</Direction>
+                    <Distance>0.027</Distance>
+                </Gatable>
+            </Mark>
+            <Mark name="2">
+                <Direction>-39</Direction>
+                <DistanceFactor>0.746593177</DistanceFactor>
+                <Gatable>
+                    <isGatable>false</isGatable>
+                </Gatable>
+            </Mark>
+            <Mark name="3">
+                <Direction>-70</Direction>
+                <DistanceFactor>1</DistanceFactor>
+                <Gatable>
+                    <isGatable>true</isGatable>
+                    <GateType>"Gate"</GateType>
+                    <Direction>-90</Direction>
+                    <Distance>0.027</Distance>
+                </Gatable>
+            </Mark>
+            <Mark name="4">
+                <Direction>0</Direction>
+                <Distance>0</Distance>
+                <Gatable>
+                    <isGatable>true</isGatable>
+                    <GateType>"Gate"</GateType>
+                    <Direction>-90</Direction>
+                    <Distance>0.027</Distance>
+                </Gatable>
+            </Mark>
+            <Mark name="StartLine">
+                <Direction>180</Direction>
+                <Distance>0.05</Distance>
+                <Gatable>
+                    <isGatable>true</isGatable>
+                    <GateType>"StartLine"</GateType>
+                    <Direction>-90</Direction>
+                    <Distance>0.07</Distance>
+                </Gatable>
+                <Mark name="Finish Line">
+                    <Direction>110</Direction>
+                    <Distance>0.1</Distance>
+                    <Gatable>
+                        <isGatable>true</isGatable>
+                        <GateType>"FinishLine"</GateType>
+                        <Direction>-90</Direction>
+                        <Distance>0.027</Distance>
+                    </Gatable>
+                </Mark>
+            </Mark>
+        </Legs>
+        <Legs name="Reach is 1/2 Beat">
+
+        </Legs>
+        <Legs name="Reach is 2/3 Beat">
+
+        </Legs>
+    </Course>
+</resources>
