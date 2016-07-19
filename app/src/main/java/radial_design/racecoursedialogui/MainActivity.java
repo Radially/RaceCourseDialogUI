@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         C470, C420, RADIAL, LASER, LASER47, OPTIMIST, OPTIMISTLOCAL, RSX, BIC78, BIC68, BIC5, KITE, CATAMARAN17, CATAMARAN21, YACHT
     }
     private BoatType[] boats;
-
+    private Map<String, String> selectedOptions;
     private double raceCourseDistance;
 
     @Override
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     public void finish(Map<String, String> result) {
                         //something to do
                         //use the map of the selected race curse options
+                        selectedOptions=result;
                     }
                 });
             }

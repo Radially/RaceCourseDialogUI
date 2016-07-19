@@ -6,6 +6,7 @@ package radial_design.racecoursedialogui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,9 @@ public class HorizontalNumberPicker extends RelativeLayout {
     private double steps=1;
     private double number = 0;
     private float textSize = 30;
+    private int buttonsBackgroundColor;
+    private int buttonsTextColor;
+
 
     private DecimalFormat df = new DecimalFormat(".##");
 
@@ -51,6 +55,8 @@ public class HorizontalNumberPicker extends RelativeLayout {
                 R.styleable.HorizontalNumberPicker, 0, 0);
         try {
             textSize = a.getFloat(R.styleable.HorizontalNumberPicker_textSize, 25);
+            buttonsTextColor = a.getColor(R.styleable.HorizontalNumberPicker_buttonsTextColor, Color.BLACK);
+            buttonsBackgroundColor = a.getColor(R.styleable.HorizontalNumberPicker_buttonsBackgroundColor, Color.TRANSPARENT);
             // get the text and colors specified using the names in attrs.xml
         } finally {
             a.recycle();
@@ -64,6 +70,8 @@ public class HorizontalNumberPicker extends RelativeLayout {
 
         plusB = (Button) this.findViewById(R.id.np_plus);
         plusB.setTextSize(textSize);
+        plusB.setTextColor(buttonsTextColor);
+        plusB.setBackgroundColor(buttonsBackgroundColor);
         plusB.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +81,8 @@ public class HorizontalNumberPicker extends RelativeLayout {
         });
         minusB = (Button) this.findViewById(R.id.np_minus);
         minusB.setTextSize(textSize);
+        minusB.setTextColor(buttonsTextColor);
+        minusB.setBackgroundColor(buttonsBackgroundColor);
         minusB.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +108,29 @@ public class HorizontalNumberPicker extends RelativeLayout {
             numberTV.setText(number+"");
         }
     }
+
+    public void setButtonsTextColor(int buttonsTextColor) {
+        this.buttonsTextColor = buttonsTextColor;
+        plusB.setTextColor(buttonsTextColor);
+        minusB.setTextColor(buttonsTextColor);
+    }
+
+    public void setButtonsBackgroundColor(int buttonsBackgroundColor) {
+        this.buttonsBackgroundColor = buttonsBackgroundColor;
+        plusB.setBackgroundColor(buttonsBackgroundColor);
+        minusB.setBackgroundColor(buttonsBackgroundColor);
+    }
+
+    public void setButtonsColors(int buttonsTextColor, int buttonsBackgroundColor) {
+        this.buttonsTextColor = buttonsTextColor;
+        plusB.setTextColor(buttonsTextColor);
+        minusB.setTextColor(buttonsTextColor);
+
+        this.buttonsBackgroundColor = buttonsBackgroundColor;
+        plusB.setBackgroundColor(buttonsBackgroundColor);
+        minusB.setBackgroundColor(buttonsBackgroundColor);
+    }
+
     public double getNumber() {
         return number;
     }
