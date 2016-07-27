@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     public Context context;
     public Button dialogOpenner;
     public Button distanceDialogB;
+    public CourseXmlParser xmlParserC;
     private List<CourseTypeOptions> coursesInfo;
     public enum BoatType{ //TODO move to online database
         C470, C420, RADIAL, LASER, LASER47, OPTIMIST, OPTIMISTLOCAL, RSX, BIC78, BIC68, BIC5, KITE, CATAMARAN17, CATAMARAN21, YACHT
@@ -29,10 +30,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         context=this;
+        xmlParserC = new CourseXmlParser(this, "courses_file.xml");
         coursesInfo = new ArrayList<CourseTypeOptions>();
-        //since coursesInfo is sent from the server, but we still don't have this system:
+
+
+        List<String> names=xmlParserC.parseCourseNames();
+        for (int i=0; i<names.size();i++){
+            coursesInfo.add(new CourseTypeOptions(names.get(i), xmlParserC.parseCourseOptions(names.get(i))));
+        }
+
+
+        /*//since coursesInfo is sent from the server, but we still don't have this system:
         //------------------from here -information sent by the server------
         List<String[]> options = new ArrayList<>();
         String[] legs = {"Legs","spinner", "Shorted Outer", "reach is 1/2 beat", "reach is 2/3 beat" };
@@ -47,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         coursesInfo.add(new CourseTypeOptions("Laser", laser));
         String[] windLee = {"Finish line location","spinner","W-Windward","L-Leeward","WR-Windward Right","WG-Windward Left","LR-Leeward Right","LG-Windward Left"};
         coursesInfo.add(new CourseTypeOptions("Windward-Leeward",windLee));
-        coursesInfo.add(new CourseTypeOptions("Optimist"));
+        coursesInfo.add(new CourseTypeOptions("Optimist"));*/
 
         boats = BoatType.values();
         //------------------until here -information sent by the server------
