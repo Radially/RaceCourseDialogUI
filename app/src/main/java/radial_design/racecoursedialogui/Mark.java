@@ -11,12 +11,12 @@ public class Mark {
     private String name;
     private int direction=0; //direction from reference point. clockwise(usually minus, as a result);
     private double distance=0;
-    private boolean distaneFactor=false;
+    private boolean distanceFactor =false;
 
-    private ArrayList<Mark> referedMarks;
+    public ArrayList<Mark> referedMarks;
 
     private boolean isGatable=false;
-    private String gateType="Bouy";  //TODO make it enum.
+    private String gateType="Buoy";  //TODO make it enum.
     private int gateDirection=(-90);
     private double gateDistance=0;
 
@@ -29,7 +29,6 @@ public class Mark {
     public void setName(String name) {
         if(name!=null)this.name = name;
         else Log.w("Mark Class insertion","null name set for Mark named:"+this.name);
-
     }
     public void setDirection(int direction) {
         this.direction = direction;
@@ -46,11 +45,11 @@ public class Mark {
         else Log.w("Mark Class insertion","null distance set - Mark named:"+this.name);
 
     }
-    public void setDistaneFactor(boolean distaneFactor) {
-        this.distaneFactor = distaneFactor;
+    public void setDistanceFactor(boolean distanceFactor) {
+        this.distanceFactor = distanceFactor;
     }
     public void setDistaneFactor(String distaneFactor) {
-        if(distaneFactor!=null)this.distaneFactor = distaneFactor.equals("true");
+        if(distaneFactor!=null)this.distanceFactor = distaneFactor.equals("true")||distaneFactor.equals("always");
         else Log.w("Mark Class insertion","null distanceFactor set - Mark named:"+this.name);
     }
     public boolean addReferedMark(Mark referedMark){
@@ -60,7 +59,7 @@ public class Mark {
         this.isGatable = isGatable;
     }
     public void setIsGatable(String isGatable) {
-        if(isGatable!=null)this.isGatable = isGatable.equals("true");
+        if(isGatable!=null)this.isGatable = isGatable.equals("true")||isGatable.equals("always");
         else Log.w("Mark Class insertion","null isGatable set - Mark named:"+this.name);
     }
     public void setGateDirection(int gateDirection) {

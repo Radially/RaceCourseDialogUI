@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Boats_file>
+    <Boat name="Laser">
+        <TargetTime>60</TargetTime>
+        <UpwindVMG-5-8>5</UpwindVMG-5-8>
+        <UpwindVMG-8-12>5</UpwindVMG-8-12>
+        <UpwindVMG-12-15>5</UpwindVMG-12-15>
+        <UpwindVMG-15->5</UpwindVMG-15->
+    </Boat>
+</Boats_file>
