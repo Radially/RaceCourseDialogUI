@@ -13,7 +13,6 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,12 +32,12 @@ public class DistanceDialog extends Dialog {
     private HorizontalNumberPicker distancePicker;
     public Button finishB;
 
-    private List<MainActivity.BoatType> boats;
+    private List<Boat> boats;
 
-    public DistanceDialog(Context context, MainActivity.BoatType[] boats) {
+    public DistanceDialog(Context context, List<Boat> boats) {
         super(context);
         this.context=context;
-        this.boats= Arrays.asList(boats);
+        this.boats= boats;
     }
 
     @Override
@@ -74,7 +73,7 @@ public class DistanceDialog extends Dialog {
         classSpinner = (Spinner) findViewById(R.id.distance_class_spinner);
         String[] items = new String[boats.size()];
         for(int i=0; i<boats.size();i++){
-            items[i]=boats.get(i).name();
+            items[i]=boats.get(i).getName();
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.spinner_layout, items);
         classSpinner.setAdapter(adapter);
@@ -88,8 +87,8 @@ public class DistanceDialog extends Dialog {
                         mDialogResult.finish(distancePicker.getNumber());
                         break;
                     case 1:
-                        MainActivity.BoatType selectedB = boats.get(classSpinner.getSelectedItemPosition());
-                        Toast.makeText(context, "Have you chosen "+selectedB.name()+ "?", Toast.LENGTH_SHORT).show();
+                        Boat selectedB = boats.get(classSpinner.getSelectedItemPosition());
+                        Toast.makeText(context, "Have you chosen "+selectedB.getName()+ "?", Toast.LENGTH_SHORT).show();
                         mDialogResult.finish(new Object[]{selectedB, windPicker.getNumber(), targetTimePicker.getNumber()});
                         break;
                 }

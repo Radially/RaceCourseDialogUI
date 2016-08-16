@@ -92,41 +92,6 @@ public class CourseXmlParser {
         return options;
     }
 
-    private List<String> getCourseNames(XmlPullParser xmlPullParser) {
-        int event;
-        List<String> coursesNames = new ArrayList<>();
-        try {
-            event = xmlPullParser.getEventType();
-            String attributeHolder;
-            String name;
-            while (event != XmlPullParser.END_DOCUMENT) {
-                name = xmlPullParser.getName();
-                switch (event) {
-                    case XmlPullParser.START_DOCUMENT:
-                        break;
-                    case XmlPullParser.START_TAG:
-                        if (name.equals("Course")) {
-                            /*attributeHolder = xmlPullParser.getAttributeValue(null,"type");
-                            if(attributeHolder!=null){*/
-                            attributeHolder = safeAttributeValue("type");
-                            coursesNames.add(attributeHolder);
-                            //}
-                            //else Log.w("xml parser", "null Course 'type' attribute");
-                        }
-                        break;
-                    case XmlPullParser.TEXT:
-                        break;
-                    case XmlPullParser.END_TAG:
-                        break;
-                }
-                event = xmlPullParser.next();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return coursesNames;
-    }
-
     private Mark parseIt(XmlPullParser xmlPullParser, Map<String, String> selectedOptions) {
         int event;
         String text = null;
@@ -201,6 +166,41 @@ public class CourseXmlParser {
             e.printStackTrace();
         }
         return referenceMark;
+    }
+
+    private List<String> getCourseNames(XmlPullParser xmlPullParser) {
+        int event;
+        List<String> coursesNames = new ArrayList<>();
+        try {
+            event = xmlPullParser.getEventType();
+            String attributeHolder;
+            String name;
+            while (event != XmlPullParser.END_DOCUMENT) {
+                name = xmlPullParser.getName();
+                switch (event) {
+                    case XmlPullParser.START_DOCUMENT:
+                        break;
+                    case XmlPullParser.START_TAG:
+                        if (name.equals("Course")) {
+                            /*attributeHolder = xmlPullParser.getAttributeValue(null,"type");
+                            if(attributeHolder!=null){*/
+                            attributeHolder = safeAttributeValue("type");
+                            coursesNames.add(attributeHolder);
+                            //}
+                            //else Log.w("xml parser", "null Course 'type' attribute");
+                        }
+                        break;
+                    case XmlPullParser.TEXT:
+                        break;
+                    case XmlPullParser.END_TAG:
+                        break;
+                }
+                event = xmlPullParser.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return coursesNames;
     }
 
     private List<String[]> getCourseOptions(XmlPullParser xmlPullParser, String courseType) {

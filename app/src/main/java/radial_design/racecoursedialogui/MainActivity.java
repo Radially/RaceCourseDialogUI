@@ -17,11 +17,10 @@ public class MainActivity extends AppCompatActivity {
     public Button dialogOpenner;
     public Button distanceDialogB;
     public CourseXmlParser xmlParserC;
+    public BoatXmlParser boatXmlParser;
     private List<CourseTypeOptions> coursesInfo;
-    public enum BoatType{ //TODO move to online database
-        C470, C420, RADIAL, LASER, LASER47, OPTIMIST, OPTIMISTLOCAL, RSX, BIC78, BIC68, BIC5, KITE, CATAMARAN17, CATAMARAN21, YACHT
-    }
-    private BoatType[] boats;
+    private List<Boat> boats;
+
     private Map<String, String> selectedOptions;
     private double raceCourseDistance;
     private Mark raceCourseReference;
@@ -33,14 +32,15 @@ public class MainActivity extends AppCompatActivity {
 
         context=this;
         xmlParserC = new CourseXmlParser(this, "courses_file.xml");
+        boatXmlParser = new BoatXmlParser(this, "boats_file.xml");
         coursesInfo = new ArrayList<CourseTypeOptions>();
 
 
         List<String> names=xmlParserC.parseCourseNames();
+        boats = boatXmlParser.parseBoats();
         for (int i=0; i<names.size();i++){
             coursesInfo.add(new CourseTypeOptions(names.get(i), xmlParserC.parseCourseOptions(names.get(i))));
         }
-        boats = BoatType.values();
 
         dialogOpenner =(Button)findViewById(R.id.open_dialog_button);
         dialogOpenner.setOnClickListener(new View.OnClickListener() {

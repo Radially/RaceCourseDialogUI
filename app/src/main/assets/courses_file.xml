@@ -2,6 +2,11 @@
 <CoursesFile>
     <Course type="Trapezoid 70,110">
         <Legs name="Shorted Outer">
+            <LengthFactors>
+                <Upwind>1</Upwind>
+                <Downwind>0.5</Downwind>
+                <Reach>0.5</Reach>
+            </LengthFactors>
             <Mark name="1" gateType="satellite" isGatable="true">
                 <Direction>0</Direction>
                 <Distance factor="true">1</Distance>
@@ -61,10 +66,18 @@
             </Mark>
         </Legs>
         <Legs name="Reach is 1/2 Beat">
-
+            <LengthFactors>
+                <Upwind>1</Upwind>
+                <Downwind>1</Downwind>
+                <Reach>0.5</Reach>
+            </LengthFactors>
         </Legs>
         <Legs name="Reach is 2/3 Beat">
-
+            <LengthFactors>
+                <Upwind>1</Upwind>
+                <Downwind>1</Downwind>
+                <Reach>0.666667</Reach>
+            </LengthFactors>
         </Legs>
     </Course>
 
