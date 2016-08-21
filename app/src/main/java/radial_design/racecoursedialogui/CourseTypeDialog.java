@@ -25,9 +25,9 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
 
     private Context context;
     private OnMyDialogResult mDialogResult;
-    private List<CourseTypeOptions> coursesList;
+    private List<CourseType> coursesList;
 
-    public CourseTypeDialog(Context context, List<CourseTypeOptions> coursesList){
+    public CourseTypeDialog(Context context, List<CourseType> coursesList){
         super(context);
         this.context=context;
         this.coursesList=coursesList;
@@ -49,8 +49,8 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
     }
 
     @Override
-    public void onRecyclerItemClick(CourseTypeOptions courseTypeOptions){
-        CourseTypeSecondDialog dialog = new CourseTypeSecondDialog(context,courseTypeOptions.getName() ,courseTypeOptions.getOptions());
+    public void onRecyclerItemClick(CourseType courseType){
+        CourseTypeSecondDialog dialog = new CourseTypeSecondDialog(context,courseType.getName() ,courseType.getOptions());
         dialog.show();
         dialog.setDialogResult(new CourseTypeSecondDialog.OnMyDialogResult() {
             public void finish(Map<String, String> result) {
