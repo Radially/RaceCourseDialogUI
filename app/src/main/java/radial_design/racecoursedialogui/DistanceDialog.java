@@ -26,18 +26,26 @@ public class DistanceDialog extends Dialog {
     private OnMyDialogResult mDialogResult;
     private TabHost tabHost;
 
-    private Spinner classSpinner;
+    private Spinner spinner;
     private HorizontalNumberPicker windPicker;
     private HorizontalNumberPicker targetTimePicker;
     private HorizontalNumberPicker distancePicker;
     public Button finishB;
 
     private List<Boat> boats;
+    private double[] courseFactors = {2,2,1};
 
     public DistanceDialog(Context context, List<Boat> boats) {
         super(context);
         this.context=context;
         this.boats= boats;
+    }
+
+    public DistanceDialog(Context context, List<Boat> boats ,double[] courseFactors) {
+        super(context);
+        this.context=context;
+        this.boats= boats;
+        this.courseFactors=courseFactors;
     }
 
     @Override
@@ -70,13 +78,13 @@ public class DistanceDialog extends Dialog {
         targetTimePicker.configNumbers(60,5);
         distancePicker = (HorizontalNumberPicker)findViewById(R.id.distance_length_picker);
         distancePicker.configNumbers(1.0,0.1);
-        classSpinner = (Spinner) findViewById(R.id.distance_class_spinner);
-        String[] items = new String[boats.size()];
+        spinner = (Spinner) findViewById(R.id.distance_class_spinner);  //NOTE: was Spinner with capital
+        final String[] items = new String[boats.size()];
         for(int i=0; i<boats.size();i++){
             items[i]=boats.get(i).getName();
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.spinner_layout, items);
-        classSpinner.setAdapter(adapter);
+        spinner.setAdapter(adapter);
 
         finishB = (Button)findViewById(R.id.distance_finish_b);
         finishB.setOnClickListener(new View.OnClickListener() {
@@ -87,9 +95,10 @@ public class DistanceDialog extends Dialog {
                         mDialogResult.finish(distancePicker.getNumber());
                         break;
                     case 1:
-                        Boat selectedB = boats.get(classSpinner.getSelectedItemPosition());
+                        Boat selectedB = boats.get(spinner.getSelectedItemPosition());
                         Toast.makeText(context, "Have you chosen "+selectedB.getName()+ "?", Toast.LENGTH_SHORT).show();
-                        mDialogResult.finish(new Object[]{selectedB, windPicker.getNumber(), targetTimePicker.getNumber()});
+                        Toast.makeText(context, "Have you chosen "+calcDistByClassWind(boats.get(spinner.getSelectedItemPosition()), windPicker.getNumber(), targetTimePicker.getNumber(), courseFactors), Toast.LENGTH_SHORT).show();
+                        mDialogResult.finish(calcDistByClassWind(boats.get(spinner.getSelectedItemPosition()), windPicker.getNumber(), targetTimePicker.getNumber(), courseFactors));
                         break;
                 }
                 dismiss();
@@ -103,5 +112,20 @@ public class DistanceDialog extends Dialog {
 
     public interface OnMyDialogResult{
         void finish(Object result);
+    }
+
+    public double calcDistByClassWind (Boat boat, double wind, double targetTime, double[] lengthFactors){  //finds the first leg length, since it equals 1 in the factor.
+        double sigmaTime= 0;
+        for(int i=0;i<3;i++){
+            sigmaTime = sigmaTime+(lengthFactors[i]*boat.getVmg()[wind2Index(wind)][i]);
+        }
+        return targetTime/sigmaTime;
+    }
+
+    public int wind2Index(double wind){  //index the wind strength. knots to right index at the boat's vmg table.
+        if (wind<5) return 0;
+        else if (wind<=8) return 1;
+        else if (wind<=12) return 2;
+        return 3;
     }
 }

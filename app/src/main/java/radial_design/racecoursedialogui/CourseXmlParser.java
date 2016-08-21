@@ -19,6 +19,7 @@ public class CourseXmlParser {
     private Context context;
     private String url;
     private List<String> names;
+    private List<CourseType> courseTypes;
     private List<String[]> options;
     private XmlPullParser parser;
 
@@ -46,6 +47,22 @@ public class CourseXmlParser {
         return result;
     }
 
+    public List<CourseType> parseCourseTypes(){
+        try {
+            InputStream stream = context.getApplicationContext().getAssets().open(url);
+            xmlFactory = XmlPullParserFactory.newInstance();
+            parser = xmlFactory.newPullParser();
+
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(stream, null);
+            courseTypes = getCourseTypes(parser);
+            stream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courseTypes;
+    }
+
     public List<String> parseCourseNames() {
         /*Thread thread = new Thread(new Runnable(){
             @Override
@@ -70,9 +87,7 @@ public class CourseXmlParser {
     }
 
     public List<String[]> parseCourseOptions(String courseType) {
-        /*Thread thread = new Thread(new Runnable(){
-            @Override
-            public void run() {*/
+
         try {
             InputStream stream = context.getApplicationContext().getAssets().open(url);
             xmlFactory = XmlPullParserFactory.newInstance();
@@ -85,10 +100,7 @@ public class CourseXmlParser {
             stream.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }/*
-            }
-        });
-        thread.start();*/
+        }
         return options;
     }
 
@@ -168,6 +180,82 @@ public class CourseXmlParser {
         return referenceMark;
     }
 
+    private List<CourseType> getCourseTypes(XmlPullParser xmlPullParser) {
+        int event;
+        List<CourseType> courseTypes = new ArrayList<>();
+        List<String> legs = new ArrayList<>(); // this is not a Spaghetti! maybe Penne or other italian names.
+
+        try {
+            event = xmlPullParser.getEventType();
+            String attributeHolder;
+            String name;
+            String valueHolder="0";
+            while (event != XmlPullParser.END_DOCUMENT) {
+                name = xmlPullParser.getName();
+                switch (event) {
+                    case XmlPullParser.START_DOCUMENT:
+                        break;
+                    case XmlPullParser.START_TAG:
+                        switch (name){
+                            case "Course":
+                                options.clear();
+                                legs.clear();
+                                attributeHolder = safeAttributeValue("type");
+                                courseTypes.add(new CourseType(attributeHolder));
+                                break;
+                            case "legs":
+                                legs.add(xmlPullParser.getAttributeValue(null, "name"));
+                                break;
+                            case "Mark":  //check 'isGatable' deeply
+                                if (safeAttributeValue("isGatable").equals("true")){  //the is an optional gate
+                                        attributeHolder = xmlPullParser.getAttributeValue(null, "gateType");  //attributeHolder restarts
+                                        String[] gatable = {"", "toggle"};
+                                        if (attributeHolder != null)
+                                            gatable[0] = xmlPullParser.getAttributeValue(null, "name") + " " + attributeHolder;
+                                        else
+                                            gatable[0] = xmlPullParser.getAttributeValue(null, "name") + " Gate";
+                                        options.add(gatable);
+                                    }
+                                break;
+
+                        }
+                        break;
+                    case XmlPullParser.TEXT:
+                        valueHolder = xmlPullParser.getText();
+                        break;
+                    case XmlPullParser.END_TAG:
+                        switch (name) {
+                            case "Upwind":
+                                courseTypes.get(courseTypes.size()-1).setCourseFactor(0,Double.parseDouble(valueHolder));
+                                break;
+                            case "Downwind":
+                                courseTypes.get(courseTypes.size()-1).setCourseFactor(1,Double.parseDouble(valueHolder));
+                                break;
+                            case "Reach":
+                                courseTypes.get(courseTypes.size()-1).setCourseFactor(2,Double.parseDouble(valueHolder));
+                                break;
+                            case "Course":
+                                if (legs.size() > 1) {  //  --NOTICE--  bigger then 1
+                                    legs.add(0, "Legs");
+                                    legs.add(1, "spinner");
+                                    String[] legsString = new String[legs.size()];
+                                    legs.toArray(legsString);
+                                    options.add(0, legsString);
+                                }
+                                courseTypes.get(courseTypes.size()-1).setOptions(options);
+                                break;
+                        }
+                        break;
+
+                }
+                event = xmlPullParser.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courseTypes;
+    }
+
     private List<String> getCourseNames(XmlPullParser xmlPullParser) {
         int event;
         List<String> coursesNames = new ArrayList<>();
@@ -207,7 +295,7 @@ public class CourseXmlParser {
         int event;
         boolean reciveMode = false;
         List<String[]> options = new ArrayList<>();
-        List<String> legs = new ArrayList<>(); // this is not a Spaghetti, maybe Penne or another italian name. :) :P
+        List<String> legs = new ArrayList<>(); // this is not a Spaghetti! maybe Penne or other italian names.
 
 
         try {
