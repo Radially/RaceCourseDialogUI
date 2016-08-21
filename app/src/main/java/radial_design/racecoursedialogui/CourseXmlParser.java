@@ -184,7 +184,7 @@ public class CourseXmlParser {
         int event;
         List<CourseType> courseTypes = new ArrayList<>();
         List<String> legs = new ArrayList<>(); // this is not a Spaghetti! maybe Penne or other italian names.
-
+        options = new ArrayList<String[]>();
         try {
             event = xmlPullParser.getEventType();
             String attributeHolder;
@@ -198,12 +198,12 @@ public class CourseXmlParser {
                     case XmlPullParser.START_TAG:
                         switch (name){
                             case "Course":
-                                options.clear();
-                                legs.clear();
+                                options= new ArrayList<String[]>();
+                                legs = new ArrayList<>();
                                 attributeHolder = safeAttributeValue("type");
                                 courseTypes.add(new CourseType(attributeHolder));
                                 break;
-                            case "legs":
+                            case "Legs":
                                 legs.add(xmlPullParser.getAttributeValue(null, "name"));
                                 break;
                             case "Mark":  //check 'isGatable' deeply
