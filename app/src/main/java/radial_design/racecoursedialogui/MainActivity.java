@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public Button distanceDialogB;
     public CourseXmlParser xmlParserC;
     public BoatXmlParser boatXmlParser;
-    private List<CourseTypeOptions> coursesInfo;
+    private List<CourseType> coursesInfo;
     private List<Boat> boats;
 
     private Map<String, String> selectedOptions;
@@ -33,14 +32,8 @@ public class MainActivity extends AppCompatActivity {
         context=this;
         xmlParserC = new CourseXmlParser(this, "courses_file.xml");
         boatXmlParser = new BoatXmlParser(this, "boats_file.xml");
-        coursesInfo = new ArrayList<CourseTypeOptions>();
-
-
-        List<String> names=xmlParserC.parseCourseNames();
-        boats = boatXmlParser.parseBoats();
-        for (int i=0; i<names.size();i++){
-            coursesInfo.add(new CourseTypeOptions(names.get(i), xmlParserC.parseCourseOptions(names.get(i))));
-        }
+        coursesInfo = xmlParserC.parseCourseTypes();
+        boats=boatXmlParser.parseBoats();
 
         dialogOpenner =(Button)findViewById(R.id.open_dialog_button);
         dialogOpenner.setOnClickListener(new View.OnClickListener() {
@@ -69,15 +62,10 @@ public class MainActivity extends AppCompatActivity {
                     public void finish(Object result) {
                         //something to do
                         Toast.makeText(context, result.getClass().toString(), Toast.LENGTH_SHORT).show();
-                        switch (result.getClass().toString()){
-                            case "class java.lang.Double":
                                 raceCourseDistance = (double)result;
                                 Toast.makeText(context, raceCourseDistance+", Straightforward ha?", Toast.LENGTH_SHORT).show();
-                                break;
-                            case "class [Ljava.lang.Object;":
-                                break;
                         }
-                    }
+
                 });
             }
         });
