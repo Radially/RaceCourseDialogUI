@@ -6,7 +6,7 @@ package radial_design.racecoursedialogui;
 public class Boat {
     private String name;
     private int targetTime;
-    private double[][] vmg = new double[4][3]; //[upwind,downwind,reach][5+,8+,12+,15+]
+    private double[][] vmg = new double[4][3]; //[5+,8+,12+,15+][upwind,downwind,reach]
 
     public Boat (String name){
         this.name=name;

@@ -13,22 +13,22 @@ import java.util.List;
  * Created by Jonathan on 13/07/2016.
  */
 public class CourseTypeRV extends RecyclerView.Adapter<CourseTypeRV.AdapterViewHolder> {
-    public List<CourseTypeOptions> infoList;
+    public List<CourseType> infoList;
     private OnRecyclerItemClickListener onRecyclerItemClickListener;
 
-    public CourseTypeRV(List<CourseTypeOptions> infoList ,OnRecyclerItemClickListener onRecyclerItemClickListener) {
+    public CourseTypeRV(List<CourseType> infoList ,OnRecyclerItemClickListener onRecyclerItemClickListener) {
         this.infoList=infoList;
         this.onRecyclerItemClickListener = onRecyclerItemClickListener;
     }
 
     public interface OnRecyclerItemClickListener {
-        void onRecyclerItemClick(CourseTypeOptions courseTypeOptions);
+        void onRecyclerItemClick(CourseType courseTypeOptions);
     }
 
     public class AdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView courseName;
         public ImageView courseImage;
-        public CourseTypeOptions courseTypeOptions;
+        public CourseType courseTypeOptions;
         private OnRecyclerItemClickListener onRecyclerItemClickListener;
         public AdapterViewHolder(View itemView,OnRecyclerItemClickListener onRecyclerItemClickListener){
             super(itemView);
@@ -41,7 +41,7 @@ public class CourseTypeRV extends RecyclerView.Adapter<CourseTypeRV.AdapterViewH
             onRecyclerItemClickListener.onRecyclerItemClick(courseTypeOptions);
         }
     }
-    public void changeList(List<CourseTypeOptions> infoList){
+    public void changeList(List<CourseType> infoList){
         this.infoList.clear();
         this.infoList.addAll(infoList);
         notifyDataSetChanged();
