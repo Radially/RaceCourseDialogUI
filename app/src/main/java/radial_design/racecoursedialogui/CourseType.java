@@ -11,25 +11,20 @@ import java.util.List;
 public class CourseType {
     private String name;
     private int imageID = R.drawable.racecourse_optimist;
-    private List<String[]> options; //{name, view to contain options, option1, option2, ...}
-    public double[] courseFactors = {1,1,0};
+    private List<LegsType> legsTypes;
+
+    /*private List<String[]> options; //{name, view to contain options, option1, option2, ...}
+    public double[] courseFactors = {1,1,0};*/
 
 
-    public CourseType(String name, List<String[]> options) {
+    public CourseType(String name, List<LegsType> legsTypes) {
         this.name = name;
-        this.options = options;
-    }
-
-    public CourseType(String name, String[] optionsArray) {
-        List<String[]> options = new ArrayList<>();
-        options.add(optionsArray);
-        this.name = name;
-        this.options = options;
+        this.legsTypes = legsTypes;
     }
 
     public CourseType(String name) {
         this.name = name;
-        this.options = null;
+        this.legsTypes = null;
     }
 
 
@@ -49,26 +44,29 @@ public class CourseType {
         return imageID;
     }
 
-    public List<String[]> getOptions() {
-        return options;
+    public List<LegsType> getLegsTypes() {
+        return legsTypes;
     }
 
-    public void setOptions(List<String[]> options) {
-        this.options = options;
+    public void setLegsTypes(List<LegsType> legsTypes) {
+        this.legsTypes = legsTypes;
     }
 
-    public void setCourseFactors(double[] courseFactors) {
-        this.courseFactors = courseFactors;
+    public LegsType getLastLeg(){
+        if(legsTypes.size()>0)return legsTypes.get(legsTypes.size()-1);
+        else return null;
     }
 
-    public double[] getCourseFactors() {
-        return courseFactors;
+    public void setLastLegCourseFactors(int windDirIndex, double factor){
+        if(legsTypes.size()>0)legsTypes.get(legsTypes.size()-1).setCourseFactor(windDirIndex, factor);
+        else Log.w("CourseType", "cannot use setLastLegCourseFactors: null legsTypes");
     }
 
-    public void setCourseFactor(int index, double factor){
-        if(index<courseFactors.length)courseFactors[index]=factor;
-        else Log.w("CourseType class", "setCourseFactor: out of factors");
-
+    public String[] getLegsNames(){
+        String[] names = new String[legsTypes.size()];
+        for(int i=0; i<legsTypes.size(); i++){
+            names[i]=legsTypes.get(i).getName();
+        }
+        return names;
     }
-
 }

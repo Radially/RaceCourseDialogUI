@@ -183,7 +183,7 @@ public class CourseXmlParser {
     private List<CourseType> getCourseTypes(XmlPullParser xmlPullParser) {
         int event;
         List<CourseType> courseTypes = new ArrayList<>();
-        List<String> legs = new ArrayList<>(); // this is not a Spaghetti! maybe Penne or other italian names.
+        List<LegsType> legsTypes = new ArrayList<>(); // this is not a Spaghetti! maybe Penne or other italian names.
         options = new ArrayList<String[]>();
         try {
             event = xmlPullParser.getEventType();
@@ -199,12 +199,13 @@ public class CourseXmlParser {
                         switch (name){
                             case "Course":
                                 options= new ArrayList<String[]>();
-                                legs = new ArrayList<>();
+                                legsTypes = new ArrayList<LegsType>();
                                 attributeHolder = safeAttributeValue("type");
                                 courseTypes.add(new CourseType(attributeHolder));
                                 break;
                             case "Legs":
-                                legs.add(xmlPullParser.getAttributeValue(null, "name"));
+                                legsTypes.add(new LegsType(xmlPullParser.getAttributeValue(null, "name")));
+                                options= new ArrayList<String[]>();
                                 break;
                             case "Mark":  //check 'isGatable' deeply
                                 if (safeAttributeValue("isGatable").equals("true")){  //the is an optional gate
@@ -226,23 +227,19 @@ public class CourseXmlParser {
                     case XmlPullParser.END_TAG:
                         switch (name) {
                             case "Upwind":
-                                courseTypes.get(courseTypes.size()-1).setCourseFactor(0,Double.parseDouble(valueHolder));
+                                legsTypes.get(legsTypes.size()-1).setCourseFactor(0, Double.parseDouble(valueHolder));
                                 break;
                             case "Downwind":
-                                courseTypes.get(courseTypes.size()-1).setCourseFactor(1,Double.parseDouble(valueHolder));
+                                legsTypes.get(legsTypes.size()-1).setCourseFactor(1, Double.parseDouble(valueHolder));
                                 break;
                             case "Reach":
-                                courseTypes.get(courseTypes.size()-1).setCourseFactor(2,Double.parseDouble(valueHolder));
+                                legsTypes.get(legsTypes.size()-1).setCourseFactor(2, Double.parseDouble(valueHolder));
+                                break;
+                            case "Legs":
+                                legsTypes.get(legsTypes.size()-1).setOptions(options);
                                 break;
                             case "Course":
-                                if (legs.size() > 1) {  //  --NOTICE--  bigger then 1
-                                    legs.add(0, "Legs");
-                                    legs.add(1, "spinner");
-                                    String[] legsString = new String[legs.size()];
-                                    legs.toArray(legsString);
-                                    options.add(0, legsString);
-                                }
-                                courseTypes.get(courseTypes.size()-1).setOptions(options);
+                                courseTypes.get(courseTypes.size()-1).setLegsTypes(legsTypes);
                                 break;
                         }
                         break;

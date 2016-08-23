@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
                     public void finish(Object result) {
                         //something to do
                         Toast.makeText(context, result.getClass().toString(), Toast.LENGTH_SHORT).show();
-                                raceCourseDistance = (double)result;
-                                Toast.makeText(context, raceCourseDistance+", Straightforward ha?", Toast.LENGTH_SHORT).show();
+                        raceCourseDistance = (double)result;
+                        Toast.makeText(context, raceCourseDistance+", Straightforward ha?", Toast.LENGTH_SHORT).show();
                         }
 
                 });

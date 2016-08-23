@@ -50,7 +50,7 @@ public class CourseTypeDialog extends Dialog implements CourseTypeRV.OnRecyclerI
 
     @Override
     public void onRecyclerItemClick(CourseType courseType){
-        CourseTypeSecondDialog dialog = new CourseTypeSecondDialog(context,courseType.getName() ,courseType.getOptions());
+        CourseTypeSecondDialog dialog = new CourseTypeSecondDialog(context,courseType);
         dialog.show();
         dialog.setDialogResult(new CourseTypeSecondDialog.OnMyDialogResult() {
             public void finish(Map<String, String> result) {
