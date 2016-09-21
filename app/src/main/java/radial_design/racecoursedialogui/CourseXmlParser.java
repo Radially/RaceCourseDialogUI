@@ -14,11 +14,14 @@ import java.util.Map;
 /**
  * Created by Jonathan on 22/07/2016.
  */
+
+/*
+    the CourseParser is parsing the CourseTypes out of the xml file, sent by the server
+ */
 public class CourseXmlParser {
     private XmlPullParserFactory xmlFactory;
     private Context context;
     private String url;
-    private List<String> names;
     private List<CourseType> courseTypes;
     private List<String[]> options;
     private XmlPullParser parser;
@@ -28,7 +31,7 @@ public class CourseXmlParser {
         this.url = url;
     }
 
-    public Mark parseXml(Map<String, String> selectedOptions) {
+    public Mark parseMarks(Map<String, String> selectedOptions) {
         Mark result = new Mark("null");
         try {
             InputStream stream = context.getApplicationContext().getAssets().open(url);
@@ -38,7 +41,7 @@ public class CourseXmlParser {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(stream, null);
 
-            result =  parseIt(parser, selectedOptions);
+            result =  getMarks(parser, selectedOptions);
             stream.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,48 +66,7 @@ public class CourseXmlParser {
         return courseTypes;
     }
 
-    public List<String> parseCourseNames() {
-        /*Thread thread = new Thread(new Runnable(){
-            @Override
-            public void run() {*/
-        try {
-            InputStream stream = context.getApplicationContext().getAssets().open(url);
-            xmlFactory = XmlPullParserFactory.newInstance();
-            parser = xmlFactory.newPullParser();
-
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(stream, null);
-
-            names = getCourseNames(parser);
-            stream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }/*
-            }
-        });
-        thread.start();*/
-        return names;
-    }
-
-    public List<String[]> parseCourseOptions(String courseType) {
-
-        try {
-            InputStream stream = context.getApplicationContext().getAssets().open(url);
-            xmlFactory = XmlPullParserFactory.newInstance();
-            parser = xmlFactory.newPullParser();
-
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(stream, null);
-
-            options = getCourseOptions(parser, courseType);
-            stream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return options;
-    }
-
-    private Mark parseIt(XmlPullParser xmlPullParser, Map<String, String> selectedOptions) {
+    private Mark getMarks(XmlPullParser xmlPullParser, Map<String, String> selectedOptions) {
         int event;
         String text = null;
         Mark referenceMark = new Mark("Reference Point"); //reference point is represented as a mark, who is the father of all marks.
@@ -253,104 +215,8 @@ public class CourseXmlParser {
         return courseTypes;
     }
 
-    private List<String> getCourseNames(XmlPullParser xmlPullParser) {
-        int event;
-        List<String> coursesNames = new ArrayList<>();
-        try {
-            event = xmlPullParser.getEventType();
-            String attributeHolder;
-            String name;
-            while (event != XmlPullParser.END_DOCUMENT) {
-                name = xmlPullParser.getName();
-                switch (event) {
-                    case XmlPullParser.START_DOCUMENT:
-                        break;
-                    case XmlPullParser.START_TAG:
-                        if (name.equals("Course")) {
-                            /*attributeHolder = xmlPullParser.getAttributeValue(null,"type");
-                            if(attributeHolder!=null){*/
-                            attributeHolder = safeAttributeValue("type");
-                            coursesNames.add(attributeHolder);
-                            //}
-                            //else Log.w("xml parser", "null Course 'type' attribute");
-                        }
-                        break;
-                    case XmlPullParser.TEXT:
-                        break;
-                    case XmlPullParser.END_TAG:
-                        break;
-                }
-                event = xmlPullParser.next();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return coursesNames;
-    }
 
-    private List<String[]> getCourseOptions(XmlPullParser xmlPullParser, String courseType) {
-        int event;
-        boolean reciveMode = false;
-        List<String[]> options = new ArrayList<>();
-        List<String> legs = new ArrayList<>(); // this is not a Spaghetti! maybe Penne or other italian names.
-
-
-        try {
-            event = xmlPullParser.getEventType();
-            String attributeHolder;
-            String valueHolder;
-            String name;
-            while (event != XmlPullParser.END_DOCUMENT) {
-                name = xmlPullParser.getName();
-                switch (event) {
-                    case XmlPullParser.START_DOCUMENT:
-                        break;
-                    case XmlPullParser.START_TAG:
-                        if (name.equals("Course")) {
-                            attributeHolder = safeAttributeValue("type");
-                            reciveMode = attributeHolder.equals(courseType);
-                            Log.i("xml parser", "Course Options receive mode is now ON");
-
-                        } else if (reciveMode && name.equals("Legs")) {
-                            legs.add(xmlPullParser.getAttributeValue(null, "name"));
-                        } else if (reciveMode && name.equals("Mark")) {
-                            attributeHolder = xmlPullParser.getAttributeValue(null, "isGatable"); //attributeHolder restarts
-                            if (attributeHolder != null && attributeHolder.equals("true")) {
-                                attributeHolder = xmlPullParser.getAttributeValue(null, "gateType");  //attributeHolder restarts
-                                String[] gatable = {"", "toggle"};
-                                if (attributeHolder != null)
-                                    gatable[0] = xmlPullParser.getAttributeValue(null, "name") + " " + attributeHolder;
-                                else
-                                    gatable[0] = xmlPullParser.getAttributeValue(null, "name") + " Gate";
-                                options.add(gatable);
-                            }
-                        }
-                        break;
-                    case XmlPullParser.TEXT:
-                        valueHolder = xmlPullParser.getText();
-                        break;
-                    case XmlPullParser.END_TAG:
-                        if (name.equals("Course")) {
-                            reciveMode = false;
-                            Log.i("xml parser", "Course Options receive mode is now OFF");
-                        }
-                        break;
-                }
-                event = xmlPullParser.next();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (legs.size() > 1) {  //  --NOTICE--  bigger then 1
-            legs.add(0, "Legs");
-            legs.add(1, "spinner");
-            String[] legsString = new String[legs.size()];
-            legs.toArray(legsString);
-            options.add(0, legsString);
-        }
-        return options;
-    }
-
+    //Both methods don't let nulls to be parsed out of the .xml files
     private String safeAttributeValue(String keyName) {
         String value = parser.getAttributeValue(null, keyName);
         if (value != null) return value;

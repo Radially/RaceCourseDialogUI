@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         //something to do
                         //use the map of the selected race curse options
                         selectedOptions=result;
-                        raceCourseReference=xmlParserC.parseXml(selectedOptions);
+                        raceCourseReference=xmlParserC.parseMarks(selectedOptions);
                     }
                 });
             }
@@ -59,11 +59,9 @@ public class MainActivity extends AppCompatActivity {
                 DistanceDialog dialog = new DistanceDialog(context, boats);
                 dialog.show();
                 dialog.setDialogResult(new DistanceDialog.OnMyDialogResult() {
-                    public void finish(Object result) {
+                    public void finish(double result) {
                         //something to do
-                        Toast.makeText(context, result.getClass().toString(), Toast.LENGTH_SHORT).show();
-                        raceCourseDistance = (double)result;
-                        Toast.makeText(context, raceCourseDistance+", Straightforward ha?", Toast.LENGTH_SHORT).show();
+                        raceCourseDistance = result;
                         }
 
                 });

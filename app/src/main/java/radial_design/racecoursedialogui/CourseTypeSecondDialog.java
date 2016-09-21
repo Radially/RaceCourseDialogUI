@@ -29,7 +29,6 @@ import java.util.Map;
 public class CourseTypeSecondDialog extends Dialog {
     private Context context;
     private LinearLayout ownLayout;
-    //private List<String[]> options; //{name, view to contain options}, {option1, option2, ...}
     private OnMyDialogResult mDialogResult;
     private CourseType courseType;
     private Button finishB;
