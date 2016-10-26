@@ -40,13 +40,13 @@ public class RaceCourse {
         AviLocation startLineCenter  = new AviLocation(signalBoatLoc,windDir-90,startLineDist/2);
         return new AviLocation(startLineCenter,windDir, 0.05);
     }
-    public void convertMarks2Bouy(){ //converts all data into the a list of Buoy class
+    public List<Buoy> convertMarks2Bouys(){ //converts all data into the a list of Buoy class
         referenceMark = xmlParserC.parseMarks(selectedOptions);  //TODO: is selectedOptions null?
-        referenceMark.parseBuoys(referencePointLoc(), dist2m1, windDir);
-
+        bouyList = referenceMark.parseBuoys(referencePointLoc(), dist2m1, windDir);
+        return bouyList;
     }
 
-
-
-
+    public List<Buoy> getBouyList() {
+        return bouyList;
+    }
 }
