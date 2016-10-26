@@ -70,8 +70,8 @@ public class CourseXmlParser {
         int event;
         String text = null;
         Mark referenceMark = new Mark("Reference Point"); //reference point is represented as a mark, who is the father of all marks.
-        ArrayList<Mark> fathers = new ArrayList<Mark>(); //preforms as a stack //to be able to add children to their father and know your location on the family tree. {grandfather(reference point), father, son, ...)
-        Mark currentMark = new Mark("nullMark/debug");
+        ArrayList<Mark> fathers = new ArrayList<Mark>(); //preforms as a stack //to be able to add children to their father and know your location on the family tree. {grandfather("Reference Point"), father, son, ...)
+        Mark currentMark = new Mark("nullMark/debug");  //if a mark named "nullMark" appears - it's a bug!
         boolean preReceiveMode = false;
         boolean receiveMode = false;
 

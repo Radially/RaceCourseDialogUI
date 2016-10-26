@@ -18,8 +18,8 @@ public class Mark {
 
     private boolean isGatable = false;
     private String gateType = "Buoy";  //TODO make it enum.
-    private int gateDirection = (-90);
-    private double gateDistance = 0;
+    private int gateDirection = (-90); //satellite direction from Main buoy OR port side direction from starboard side
+    private double gateDistance = 0;  //distance between gate's buoys
 
     public Mark(String name) {
         this.name = name;
@@ -105,6 +105,10 @@ public class Mark {
 
     }
 
+    public int getGateDirection() {
+        return gateDirection;
+    }
+
     public void setGateDistance(double gateDistance) {
         this.gateDistance = gateDistance;
     }
@@ -114,31 +118,51 @@ public class Mark {
         else Log.w("Mark Class insertion", "null gateDistance set - Mark named:" + this.name);
     }
 
+    public double getGateDistance() {
+        return gateDistance;
+    }
+
     public void setGateType(String gateType) {
         this.gateType = gateType;
     }
 
-    private List<Buoy> parseBouys(AviLocation referencePoint, double multiplication) {
+    public List<Buoy> parseBuoys(AviLocation referencePoint, double multiplication, int windDir) {  //parses the mark and his sons into buoys
+        /**
+         * referencePoint - the referencePoint location. NOT SIGNAL BOAT
+         * multiplication - known also as dist2m1 (the distance toward the first mark)
+         * windDir  -wind direction
+         *
+         * Each Mark is a tree root to marks that uses it's location, so this function must act recursively
+         */
         List<Buoy> buoys = new ArrayList<>();
-        AviLocation location =new AviLocation(referencePoint, getDirection(), getAbsDistance(multiplication));
+        AviLocation location =new AviLocation(referencePoint, getDirection()+windDir, getAbsDistance(multiplication));
         switch (this.gateType){
             case "Buoy":  //adds a single buoy
                 buoys.add(new Buoy(this.getName(), location));
                 break;
             case "Gate":
+                buoys.add(new Buoy(this.getName()+"S", new AviLocation(location, windDir-getGateDirection(), getGateDistance()/2) ));
+                buoys.add(new Buoy(this.getName()+"P", new AviLocation(location, windDir+getGateDirection(), getGateDistance()/2) ));
                 break;
             case "FinishLine":
+                buoys.add(new Buoy(this.getName()+"S", new AviLocation(location, windDir-getGateDirection(), getGateDistance()/2) ));
+                buoys.add(new Buoy(this.getName()+"P", new AviLocation(location, windDir+getGateDirection(), getGateDistance()/2) ));
                 break;
             case "StartLine":
+                buoys.add(new Buoy(this.getName()+"S", new AviLocation(location, windDir-getGateDirection(), getGateDistance()/2) ));
+                buoys.add(new Buoy(this.getName()+"P", new AviLocation(location, windDir+getGateDirection(), getGateDistance()/2) ));
                 break;
             case "Satellite":
+                buoys.add(new Buoy(this.getName(), location));
+                buoys.add(new Buoy(this.getName()+"a", new AviLocation(location, windDir+getGateDirection(), getGateDistance()) ));
                 break;
             default:
+                Log.e("Mark class parsing", "gateType not recognized. no buoy added");
         }
         //parseChildren
         for(int i=0; i<this.getReferedMarks().size(); i++ ){
             Mark child = this.getReferedMarks().get(i);
-            buoys.addAll(child.parseBouys(location, multiplication));
+            buoys.addAll(child.parseBuoys(location, multiplication, windDir));
         }
         return buoys;
     }
