@@ -12,8 +12,8 @@ public interface ICommManager {
     int writeBoatObject(Buoy o);
     int writeBuoyObject(Buoy o);
 
-    List<Buoy> getAllBoats();
-    List<Buoy> getAllBuoys();
+    List<Buoy> getAllBoats();  //ships
+    List<Buoy> getAllBuoys();  //Just buoys, without ships
 
     int sendAction(RaceManagerAction a, Buoy o);
 
